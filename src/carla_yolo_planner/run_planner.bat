@@ -10,10 +10,10 @@ if %errorlevel% neq 0 (
 )
 
 echo 正在切换到项目目录...
-cd /d D:\gmj\nn\src\carla_yolo_planner
+cd /d "%~dp0"
 
 if %errorlevel% neq 0 (
-    echo 错误：无法切换到目录 D:\gmj\nn\src\carla_yolo_planner
+    echo 错误：无法切换到脚本所在目录
     pause
     exit /b 1
 )
