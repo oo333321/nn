@@ -158,9 +158,34 @@ def main():
                         velocity = client.vehicle.get_velocity()
                         speed_kmh = velocity.length() * 3.6
                     
-                    # 更新并绘制 HUD（包含速度）
-                    client.update_hud_info(fps, len(results), speed_kmh, warning_msg if is_brake else "")
-                    client.draw_hud()
+                    # 创建小型 HUD 窗口，固定显示在屏幕左上角
+                    hud_frame = np.zeros((150, 300, 3), dtype=np.uint8)
+                    cv2.putText(hud_frame, f"Speed: {speed_kmh:.1f} km/h", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+                    cv2.putText(hud_frame, f"FPS: {fps:.1f}", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+                    cv2.putText(hud_frame, f"Detections: {len(results)}", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                    cv2.putText(hud_frame, f"View: {client.get_current_camera_name()}", (10, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 128, 0), 2)
+                    
+                    if is_brake:
+                        cv2.putText(hud_frame, "!!! BRAKING !!!", (10, 145), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+                    
+                    # 设置窗口位置到屏幕左上角
+                    cv2.namedWindow("HUD", cv2.WINDOW_NORMAL)
+                    cv2.resizeWindow("HUD", 300, 150)
+                    cv2.moveWindow("HUD", 0, 0)
+                    cv2.imshow("HUD", hud_frame)
+                    
+                    # 处理键盘输入
+                    key = cv2.waitKey(1) & 0xFF
+                    if key == ord('q'):
+                        break
+                    elif key == ord('1'):
+                        client.switch_camera('front')
+                    elif key == ord('2'):
+                        client.switch_camera('back')
+                    elif key == ord('3'):
+                        client.switch_camera('left')
+                    elif key == ord('4'):
+                        client.switch_camera('right')
                     
                     # 检测碰撞并自动重置
                     client.check_collision_and_reset()
