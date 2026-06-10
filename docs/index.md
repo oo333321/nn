@@ -86,6 +86,8 @@ title: 主页
 
 [__导航__](#navigation)
 
+[__Carla YOLO规划器__](carla_yolo_planner.md) - Carla环境结合YOLO的自动驾驶路径规划方案
+
 ## 控制  <span id="control"></span>
 
 [PID](#pid)
@@ -218,6 +220,7 @@ title: 主页
 
 [__导航__](#navigation)
 
+- [__Carla YOLO规划器__](carla_yolo_planner.md) - Carla环境结合YOLO的自动驾驶路径规划方案
 
 
 ## 控制  <span id="control"></span>
